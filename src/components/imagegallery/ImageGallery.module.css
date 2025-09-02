@@ -1,0 +1,12 @@
+.imageList {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    gap: 8px;
+}
+
+.imageListElement {
+    width: calc(25% - 12px);
+    box-sizing: border-box;
+}

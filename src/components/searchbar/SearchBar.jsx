@@ -1,33 +1,32 @@
 import { Toaster } from "react-hot-toast";
+import ImageSearch from "../../assets/search.svg"
+import css from './SearchBar.module.css'
 import toast from "react-hot-toast";
 
-const SearchBar = ({ onSubmit, fetchImages}) => {
-
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    const searchValue = evt.target.elements[0].value;
-    if (searchValue === "" || searchValue === undefined) {
-      toast("Input value in search bar");
-    } else {
-      const photos = await fetchImages(evt.target.elements[0].value);
-      onSubmit(photos);
-    }
-  };
-
+const SearchBar = ({ onSubmit }) => {
   return (
-    <header>
+    <header className={css.header}>
       <div>
         <Toaster />
       </div>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          const value = evt.target.elements[0].value;
+          onSubmit(value);
+        }}
+        className={css.form}
+      >
         <input
-          class="input"
+          className={css.formInput}
           type="text"
-          autocomplete="off"
-          autofocus
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
-        <button type="submit">Search</button>
+        <button className={css.formButton} type="submit">
+          <img className={css.icon} src={ImageSearch} alt="" />
+        </button>
       </form>
     </header>
   );

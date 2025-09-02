@@ -1,7 +1,10 @@
+import css from './ImageCard.module.css';
+
 const ImageCard = ({ photo }) => {
   return (
-    <div>
+    <div className={css.imageContainer}>
       <img
+        className={css.imageCard}
         src={photo.urls.small}
         alt={photo.alt_description || "Unsplash photo"}
       />

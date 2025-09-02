@@ -1,9 +1,8 @@
 
-
-const LoadMoreBtn = (func) => {
+const LoadMoreBtn = ({handleClick}) => {
     return (
         <div>
-            <button onClick={func}>Load More</button>
+            <button onClick={handleClick}>Load More</button>
         </div>
     )
 }

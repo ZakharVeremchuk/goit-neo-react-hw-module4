@@ -1,0 +1,40 @@
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: blue;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.formInput {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    width: 300px;
+    height: 20px;
+}
+
+.formButton {
+    border: none;
+    background-color: transparent;
+    height: 20px;
+    width: 20px;
+    padding: 0;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin: 0 0;
+    padding: 0 0;
+}
