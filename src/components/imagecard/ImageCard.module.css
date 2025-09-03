@@ -5,14 +5,12 @@
     background-color: #f0f8ff;
     width: 300px;
     height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     overflow: hidden;
+    object-fit: cover;
 }
 
 .card img {
     width: auto;
     height: 100%;
     display: block;
-    object-fit: cover;
 }

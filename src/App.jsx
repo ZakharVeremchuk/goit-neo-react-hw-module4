@@ -6,6 +6,7 @@ import ImageModal from "./components/imagemodal/ImageModal";
 import "./App.css";
 import LoadMoreBtn from "./components/loadmorebtn/LoadMoreBtn";
 import axios from "axios";
+import ErrorMessage from "./components/errormessage/Errormessage";
 
 function App() {
   const [photos, setPhotos] = useState([]);
@@ -13,10 +14,10 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [error, setError] = useState(false);
 
   async function fetchImages(searchValue, page = 1) {
-    setLoading(true);
     const response = await axios.get("https://api.unsplash.com/search/photos", {
       params: {
         query: searchValue,
@@ -24,14 +25,22 @@ function App() {
         client_id: "JYMZ7DTu_ibjwkHlenLjwHgOuyEw8LV26WBWvysNigI",
       },
     });
-    setLoading(false);
     return response.data.results;
   }
 
   const handleSubmit = async (value) => {
     setSearchValue(value);
     setPage(1);
-    const results = await fetchImages(value, 1);
+    setError(false);
+    setLoading(true);
+    let results = [];
+    try {
+      results = await fetchImages(value, 1);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
     setPhotos(results);
   };
 
@@ -42,15 +51,25 @@ function App() {
     setPage(nextPage);
   };
 
-  const hadnleImageCLick = (image) => {setSelectedImage(image); setModalIsOpen(true)};
-  const closeModal = () => setSelectedImage(null);
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setModalOpen(true);
+  };
+  const closeModal = () => setModalOpen(false);
 
   return (
     <>
       <SearchBar onSubmit={handleSubmit} />
+      {error && <ErrorMessage />}
       {loading && <Loader />}
-      <ImageGallery photos={photos} handleClickFunc={hadnleImageCLick}/>
-      {selectedImage && <ImageModal image={selectedImage} onClose={closeModal}/>}
+      <ImageGallery photos={photos} openModal={openModal} />
+      {selectedImage && (
+        <ImageModal
+          isOpen={modalOpen}
+          photo={selectedImage}
+          onClose={closeModal}
+        />
+      )}
       {photos.length > 0 && <LoadMoreBtn handleClick={handleMore} />}
     </>
   );

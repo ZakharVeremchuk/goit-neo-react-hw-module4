@@ -1,9 +1,9 @@
 import { BeatLoader } from "react-spinners";
 
-const Loader = ({ref}) => {
+const Loader = () => {
     return (
         <>
-        <BeatLoader ref={ref}  color="green" size={9}/>
+        <BeatLoader color="green" size={9}/>
         </>
     )
 }

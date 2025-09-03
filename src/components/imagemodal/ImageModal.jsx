@@ -3,19 +3,22 @@ import css from "./ImageModal.module.css";
 
 Modal.setAppElement("#root");
 
-const ImageModal = (photo, onClose) => {
-  if (!photo) return null;
+const ImageModal = ({isOpen, photo, onClose}) => {
   return (
     <Modal
-      isOpen={!!photo}
+      isOpen={isOpen}
       onRequestClose={onClose}
-      contentLabel="Image Modal"
       overlayClassName={css.overlay}
-      className={css.modalContent}
+      className={css.modal}
     >
-      <div style={{ backgroundColor: photo?.color }}>
-        <img src={photo?.urls?.regular} alt={photo?.alt_description} />
-      </div>
+    <div>
+      {photo && (
+        <div className={css.photoContainer}>
+          <img className={css.photo} src={photo.urls.regular} alt={photo.description} />
+        </div>
+      )}
+
+    </div>
     </Modal>
   );
 };
