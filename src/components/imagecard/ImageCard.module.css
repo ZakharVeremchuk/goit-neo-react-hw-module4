@@ -1,8 +1,18 @@
-.imageContainer {
-    width: 100px;
-    height: 100px;
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f8ff;
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
-.imageCard {
-    background-size: cover;
+.card img {
+    width: auto;
+    height: 100%;
+    display: block;
+    object-fit: cover;
 }

@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import SearchBar from "./components/searchbar/SearchBar";
 import ImageGallery from "./components/imagegallery/ImageGallery";
 import Loader from "./components/loader/Loader";
+import ImageModal from "./components/imagemodal/ImageModal";
 import "./App.css";
 import LoadMoreBtn from "./components/loadmorebtn/LoadMoreBtn";
 import axios from "axios";
@@ -11,6 +12,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   async function fetchImages(searchValue, page = 1) {
     setLoading(true);
@@ -21,14 +24,14 @@ function App() {
         client_id: "JYMZ7DTu_ibjwkHlenLjwHgOuyEw8LV26WBWvysNigI",
       },
     });
-    setLoading(false)
+    setLoading(false);
     return response.data.results;
   }
 
   const handleSubmit = async (value) => {
     setSearchValue(value);
     setPage(1);
-    const results = await fetchImages(value, 1)
+    const results = await fetchImages(value, 1);
     setPhotos(results);
   };
 
@@ -37,18 +40,18 @@ function App() {
     const results = await fetchImages(searchValue, nextPage);
     setPhotos((prev) => [...prev, ...results]);
     setPage(nextPage);
-  }
+  };
+
+  const hadnleImageCLick = (image) => {setSelectedImage(image); setModalIsOpen(true)};
+  const closeModal = () => setSelectedImage(null);
 
   return (
     <>
-        <SearchBar
-          onSubmit={handleSubmit}
-        />
-      <ImageGallery photos={photos} />
+      <SearchBar onSubmit={handleSubmit} />
       {loading && <Loader />}
-      {photos.length > 0 && (
-        <LoadMoreBtn handleClick={handleMore} />
-      )}
+      <ImageGallery photos={photos} handleClickFunc={hadnleImageCLick}/>
+      {selectedImage && <ImageModal image={selectedImage} onClose={closeModal}/>}
+      {photos.length > 0 && <LoadMoreBtn handleClick={handleMore} />}
     </>
   );
 }

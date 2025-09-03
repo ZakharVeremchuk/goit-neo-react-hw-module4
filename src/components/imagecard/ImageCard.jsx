@@ -4,7 +4,7 @@ const ImageCard = ({ photo }) => {
   return (
     <div className={css.imageContainer}>
       <img
-        className={css.imageCard}
+        className={css.card}
         src={photo.urls.small}
         alt={photo.alt_description || "Unsplash photo"}
       />
