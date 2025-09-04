@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
-import ImageSearch from "../../assets/search.svg"
-import css from './SearchBar.module.css'
+import ImageSearch from "../../assets/search.svg";
+import css from "./SearchBar.module.css";
 import toast from "react-hot-toast";
 
 const SearchBar = ({ onSubmit }) => {
@@ -12,8 +12,14 @@ const SearchBar = ({ onSubmit }) => {
       <form
         onSubmit={(evt) => {
           evt.preventDefault();
-          const value = evt.target.elements[0].value;
-          onSubmit(value);
+          if (!evt.target.elements[0].value) {
+            toast.error("Search can't be empty. Please input value", {
+              duration: 2000,
+            });
+          } else {
+            const value = evt.target.elements[0].value;
+            onSubmit(value);
+          }
         }}
         className={css.form}
       >
